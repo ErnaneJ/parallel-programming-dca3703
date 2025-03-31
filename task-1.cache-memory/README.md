@@ -2,7 +2,7 @@
 
 | Row Major | Column Major |
 |:-:|:-:|
-|![Row Major](./row-major.png)|![Column Major](./column-major.png)|
+|![Row Major](./assets/row-major.png)|![Column Major](./assets/column-major.png)|
 
 ## 📌 Descrição
 
