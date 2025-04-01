@@ -49,8 +49,8 @@ A compilação ocorrerá automaticamente com os níveis de otimização -O0, -O2
 ```bash
 - ⏳ Compiling with -O0 using gcc-14...
 -- ✅ Compilation with -O0 completed!
--- 📦 Output file: $(pwd)/task-2.pipeline-and-vectorization/bin/../out/main_O0.o
-- ⏳ Running main_O0.o...
+-- 📦 Output file: $(pwd)/task-2.pipeline-and-vectorization/bin/../out/ilp_benchmark_O0.o
+- ⏳ Running ilp_benchmark_O0.o...
 
 Initialization time: 0.281583 seconds
 Time (dependent): 0.250807 seconds, Result: 1087459712
@@ -59,12 +59,12 @@ Time (independent - 4 accumulators): 0.070880 seconds, Result: 1087459712
 Time (independent - 8 accumulators): 0.055148 seconds, Result: 1087459712
 
 Consistent results for all versions: Yes
-- ✅ main_O0.o executed successfully!
+- ✅ ilp_benchmark_O0.o executed successfully!
 
 - ⏳ Compiling with -O2 using gcc-14...
 -- ✅ Compilation with -O2 completed!
--- 📦 Output file: $(pwd)/task-2.pipeline-and-vectorization/bin/../out/main_O2.o
-- ⏳ Running main_O2.o...
+-- 📦 Output file: $(pwd)/task-2.pipeline-and-vectorization/bin/../out/ilp_benchmark_O2.o
+- ⏳ Running ilp_benchmark_O2.o...
 
 Initialization time: 0.043235 seconds
 Time (dependent): 0.037755 seconds, Result: 1087459712
@@ -73,12 +73,12 @@ Time (independent - 4 accumulators): 0.049652 seconds, Result: 1087459712
 Time (independent - 8 accumulators): 0.015424 seconds, Result: 1087459712
 
 Consistent results for all versions: Yes
-- ✅ main_O2.o executed successfully!
+- ✅ ilp_benchmark_O2.o executed successfully!
 
 - ⏳ Compiling with -O3 using gcc-14...
 -- ✅ Compilation with -O3 completed!
--- 📦 Output file: $(pwd)/task-2.pipeline-and-vectorization/bin/../out/main_O3.o
-- ⏳ Running main_O3.o...
+-- 📦 Output file: $(pwd)/task-2.pipeline-and-vectorization/bin/../out/ilp_benchmark_O3.o
+- ⏳ Running ilp_benchmark_O3.o...
 
 Initialization time: 0.050921 seconds
 Time (dependent): 0.021798 seconds, Result: 1087459712
@@ -87,7 +87,7 @@ Time (independent - 4 accumulators): 0.015027 seconds, Result: 1087459712
 Time (independent - 8 accumulators): 0.007994 seconds, Result: 1087459712
 
 Consistent results for all versions: Yes
-- ✅ main_O3.o executed successfully!
+- ✅ ilp_benchmark_O3.o executed successfully!
 ```
 
 ### Resultados
