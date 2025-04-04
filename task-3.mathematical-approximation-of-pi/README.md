@@ -8,9 +8,7 @@ Este projeto implementa, em linguagem C, uma aproximação do número π utiliza
 
 A aproximação é baseada na série de Leibniz:
 
-\[
-\pi = 4 \sum_{k=0}^{\infty} \frac{(-1)^k}{2k+1}
-\]
+![Fórmula de pi](https://latex.codecogs.com/png.latex?\dpi{120}\pi%20=%204%20\sum_{k=0}^{\infty}%20\frac{(-1)^k}{2k+1})
 
 ## 🧪 Execução do Programa em C
 
