@@ -1,0 +1,15 @@
+#!/bin/bash
+
+LOG_FILE="./task-4.memory-or-cpu--bound-applications/data/execution.log"
+CSV_FILE="./task-4.memory-or-cpu--bound-applications/data/results.csv"
+rm -f $CSV_FILE
+
+echo "Threads,Memory-Bound Time (s),Compute-Bound Time (s)" > $CSV_FILE
+
+awk '
+    /Execution with/ {threads=$3}
+    /Memory-bound with/ {mem_time=$5}
+    /Compute-bound with/ {comp_time=$5; print threads "," mem_time "," comp_time}
+' $LOG_FILE >> $CSV_FILE
+
+echo "CSV gerado: $CSV_FILE"
