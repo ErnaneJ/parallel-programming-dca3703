@@ -1,0 +1,39 @@
+#!/bin/bash
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+OUT_DIR="$SCRIPT_DIR/../out"
+MAIN_FILE="$SCRIPT_DIR/../ilp_benchmark.c"
+
+echo "👉 Current directory: $SCRIPT_DIR"
+mkdir -p "$OUT_DIR"
+
+if [ ! -f "$MAIN_FILE" ]; then
+    echo "❌ Error: ilp_benchmark.c not found in $SCRIPT_DIR!"
+    exit 1
+fi
+
+echo
+read -p "🎯 Enter the compiler to use (e.g., gcc, gcc-14, clang): " COMPILER
+echo 
+if ! command -v $COMPILER &> /dev/null; then
+    echo "❌ Error: Compiler '$COMPILER' not found!"
+    exit 1
+fi
+
+OPT_LEVELS=("O0" "O2" "O3")
+
+for opt in "${OPT_LEVELS[@]}"; do
+    echo -e "\n- ⏳ Compiling with -${opt} using $COMPILER..."
+    $COMPILER -${opt} "$MAIN_FILE" -o "$OUT_DIR/ilp_benchmark_${opt}.o"
+    echo "-- ✅ Compilation with -${opt} completed!"
+    echo "-- 📦 Output file: $OUT_DIR/ilp_benchmark_${opt}.o"
+
+    if [ $? -eq 0 ]; then
+        echo -e "- ⏳ Running ilp_benchmark_${opt}.o...\n"
+        "$OUT_DIR/ilp_benchmark_${opt}.o"
+        echo "- ✅ ilp_benchmark_${opt}.o executed successfully!"
+    else
+        echo "-- ❌ Compilation failed for -${opt}"
+        exit 1
+    fi
+done
