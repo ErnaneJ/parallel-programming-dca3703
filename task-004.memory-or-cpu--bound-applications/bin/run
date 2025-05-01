@@ -1,0 +1,40 @@
+#!/bin/bash
+# set -x
+DIR="./task-4.memory-or-cpu--bound-applications"
+
+MEMORY_SRC="$DIR/memory_bound.c"
+COMPUTE_SRC="$DIR/compute_bound.c"
+
+MEMORY_EXE="$DIR/bin/memory_bound"
+COMPUTE_EXE="$DIR/bin/compute_bound"
+
+LOG_FILE="./task-4.memory-or-cpu--bound-applications/data/execution.log"
+rm -f $LOG_FILE
+
+MAX_THREADS=32
+
+echo
+echo "⚙️ Compiling programs..."
+gcc-14 -o $MEMORY_EXE $MEMORY_SRC -fopenmp
+gcc-14 -o $COMPUTE_EXE $COMPUTE_SRC -fopenmp -lm
+
+if [ ! -f "$MEMORY_EXE" ] || [ ! -f "$COMPUTE_EXE" ]; then
+    echo "❌ Error!" | tee -a $LOG_FILE
+    exit 1
+fi
+
+echo "🤖 Execution started at $(date)" | tee -a $LOG_FILE
+
+for ((threads=1; threads<=MAX_THREADS; threads++)); do
+    echo "Execution with $threads threads" | tee -a $LOG_FILE
+    
+    echo -e "\n=== Memory-Bound with $threads threads ===" | tee -a $LOG_FILE
+    $MEMORY_EXE $threads | tee -a $LOG_FILE
+    
+    echo -e "\n=== Compute-Bound with $threads threads ===" | tee -a $LOG_FILE
+    $COMPUTE_EXE $threads | tee -a $LOG_FILE
+done
+
+echo
+echo "✅ Execution finished at $(date)" | tee -a $LOG_FILE
+echo "📜 Log file: $LOG_FILE"
