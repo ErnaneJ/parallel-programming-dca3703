@@ -66,9 +66,9 @@ python ./task-11.impact-of-schedule-and-collapse-clauses/plot_benchmark.py
 
 | 🔻 Sem Perturbação                                                          | 🔺 Com Perturbação                                                          |
 |----------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| ![Sem Perturbação - Static](./data/benchmark_sem_perturbacao_static.png)   | ![Com Perturbação - Static](./data/benchmark_com_perturbacao_static.png)   |
-| ![Sem Perturbação - Dynamic](./data/benchmark_sem_perturbacao_dynamic.png) | ![Sem Perturbação - Dynamic](./data/benchmark_com_perturbacao_dynamic.png) |
-| ![Sem Perturbação - Guided](./data/benchmark_sem_perturbacao_guided.png)   | ![Com Perturbação - Guided](./data/benchmark_com_perturbacao_guided.png)   |
+| ![Sem Perturbação - Static](./data/benchmark_no_disturbance_static.png)   | ![Com Perturbação - Static](./data/benchmark_with_disturbance_static.png)   |
+| ![Sem Perturbação - Dynamic](./data/benchmark_no_disturbance_dynamic.png) | ![Sem Perturbação - Dynamic](./data/benchmark_with_disturbance_dynamic.png) |
+| ![Sem Perturbação - Guided](./data/benchmark_no_disturbance_guided.png)   | ![Com Perturbação - Guided](./data/benchmark_with_disturbance_guided.png)   |
 
 ### Visualização 3D Interativa
 
