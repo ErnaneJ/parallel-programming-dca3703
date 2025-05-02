@@ -5,7 +5,7 @@ import os
 N = 32
 SNAPSHOT_INTERVAL = 10
 NSTEPS = 1000
-BINARY_FILE = './task-11.impact-of-schedule-and-collapse-clauses/data/fluid_with_perturbation.bin'
+BINARY_FILE = './task-011.impact-of-schedule-and-collapse-clauses/data/fluid_with_perturbation.bin'
 
 def read_snapshots(filename: str) -> tuple[np.ndarray, int]:
     """

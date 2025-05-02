@@ -137,13 +137,13 @@
   * @brief Entry point: runs simulations with various OpenMP configurations.
   */
  int main() {
-     FILE *f = fopen("./task-11.impact-of-schedule-and-collapse-clauses/data/benchmarks.csv", "w");
+     FILE *f = fopen("./task-011.impact-of-schedule-and-collapse-clauses/data/benchmarks.csv", "w");
      if (!f) {
          perror("Failed to open benchmark CSV file.");
          return 1;
      }
  
-     FILE *bin_file = fopen("./task-11.impact-of-schedule-and-collapse-clauses/data/fluid_with_perturbation.bin", "wb");
+     FILE *bin_file = fopen("./task-011.impact-of-schedule-and-collapse-clauses/data/fluid_with_perturbation.bin", "wb");
      if (!bin_file) {
          perror("Failed to open binary output file.");
          return 1;
@@ -152,11 +152,11 @@
      save_csv_header(f);
  
      const char *schedules[] = {"static", "dynamic", "guided"};
-     int chunk_sizes[] = {1, 2, 4, 8};
+     int chunk_sizes[] = {1, 2, 4, 8, 16, 32, 64, 125, 128, 256, 512, 1024};
      int collapses[] = {0, 1};
  
      for (int s = 0; s < 3; s++) {
-         for (int c = 0; c < 4; c++) {
+         for (int c = 0; c < 12; c++) {
              for (int col = 0; col < 2; col++) {
                  run_simulation(schedules[s], chunk_sizes[c], collapses[col], f, bin_file);
              }
@@ -166,7 +166,7 @@
      fclose(f);
      fclose(bin_file);
  
-     printf("All tests completed. Results saved to './task-11.impact-of-schedule-and-collapse-clauses/data/benchmarks.csv'.\n");
+     printf("All tests completed. Results saved to './task-011.impact-of-schedule-and-collapse-clauses/data/benchmarks.csv'.\n");
      return 0;
  }
  
