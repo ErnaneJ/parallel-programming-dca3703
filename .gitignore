@@ -2,4 +2,6 @@ build
 .DS_Store
 venv
 .vscode
-.bintask-011.impact-of-schedule-and-collapse-clauses/data/fluid_with_perturbation.bin
+.bin
+task-011.impact-of-schedule-and-collapse-clauses/data/fluid_with_perturbation.bin
+task-011.impact-of-schedule-and-collapse-clauses/data/fluid_with_perturbation.bin
