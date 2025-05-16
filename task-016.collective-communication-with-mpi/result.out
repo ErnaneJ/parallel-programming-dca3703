@@ -1,0 +1,458 @@
+# saiu assim:
+
+Início da simulação MPI de multiplicação A\*x com matrizes quadradas: Wed May 14 19:45:35 -03 2025
+Executável: ./matvec
+====================
+
+---
+
+## Testando com 2 processos MPI e matriz 512 x 512 (execução 1)
+
+Tempo total de execução: 0.000136 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 512 x 512 (execução 2)
+
+Tempo total de execução: 0.000137 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 512 x 512 (execução 3)
+
+Tempo total de execução: 0.000130 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 1024 x 1024 (execução 1)
+
+Tempo total de execução: 0.000442 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 1024 x 1024 (execução 2)
+
+Tempo total de execução: 0.000442 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 1024 x 1024 (execução 3)
+
+Tempo total de execução: 0.000442 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 2048 x 2048 (execução 1)
+
+Tempo total de execução: 0.002082 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 2048 x 2048 (execução 2)
+
+Tempo total de execução: 0.002069 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 2048 x 2048 (execução 3)
+
+Tempo total de execução: 0.002075 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 3072 x 3072 (execução 1)
+
+Tempo total de execução: 0.004566 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 3072 x 3072 (execução 2)
+
+Tempo total de execução: 0.004595 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 3072 x 3072 (execução 3)
+
+Tempo total de execução: 0.004583 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 4096 x 4096 (execução 1)
+
+Tempo total de execução: 0.008106 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 4096 x 4096 (execução 2)
+
+Tempo total de execução: 0.008121 segundos
+
+---
+
+## Testando com 2 processos MPI e matriz 4096 x 4096 (execução 3)
+
+Tempo total de execução: 0.008124 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 512 x 512 (execução 1)
+
+Tempo total de execução: 0.000074 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 512 x 512 (execução 2)
+
+Tempo total de execução: 0.000069 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 512 x 512 (execução 3)
+
+Tempo total de execução: 0.000067 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 1024 x 1024 (execução 1)
+
+Tempo total de execução: 0.000300 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 1024 x 1024 (execução 2)
+
+Tempo total de execução: 0.000261 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 1024 x 1024 (execução 3)
+
+Tempo total de execução: 0.000244 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 2048 x 2048 (execução 1)
+
+Tempo total de execução: 0.001211 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 2048 x 2048 (execução 2)
+
+Tempo total de execução: 0.001065 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 2048 x 2048 (execução 3)
+
+Tempo total de execução: 0.001216 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 3072 x 3072 (execução 1)
+
+Tempo total de execução: 0.002710 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 3072 x 3072 (execução 2)
+
+Tempo total de execução: 0.002710 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 3072 x 3072 (execução 3)
+
+Tempo total de execução: 0.002735 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 4096 x 4096 (execução 1)
+
+Tempo total de execução: 0.004791 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 4096 x 4096 (execução 2)
+
+Tempo total de execução: 0.004825 segundos
+
+---
+
+## Testando com 4 processos MPI e matriz 4096 x 4096 (execução 3)
+
+Tempo total de execução: 0.004802 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 512 x 512 (execução 1)
+
+Tempo total de execução: 0.000039 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 512 x 512 (execução 2)
+
+Tempo total de execução: 0.000040 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 512 x 512 (execução 3)
+
+Tempo total de execução: 0.000040 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 1024 x 1024 (execução 1)
+
+Tempo total de execução: 0.000158 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 1024 x 1024 (execução 2)
+
+Tempo total de execução: 0.000156 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 1024 x 1024 (execução 3)
+
+Tempo total de execução: 0.000176 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 2048 x 2048 (execução 1)
+
+Tempo total de execução: 0.000654 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 2048 x 2048 (execução 2)
+
+Tempo total de execução: 0.000609 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 2048 x 2048 (execução 3)
+
+Tempo total de execução: 0.000586 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 3072 x 3072 (execução 1)
+
+Tempo total de execução: 0.001355 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 3072 x 3072 (execução 2)
+
+Tempo total de execução: 0.001474 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 3072 x 3072 (execução 3)
+
+Tempo total de execução: 0.001482 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 4096 x 4096 (execução 1)
+
+Tempo total de execução: 0.002689 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 4096 x 4096 (execução 2)
+
+Tempo total de execução: 0.002447 segundos
+
+---
+
+## Testando com 8 processos MPI e matriz 4096 x 4096 (execução 3)
+
+Tempo total de execução: 0.002469 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 512 x 512 (execução 1)
+
+Tempo total de execução: 0.000023 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 512 x 512 (execução 2)
+
+Tempo total de execução: 0.000026 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 512 x 512 (execução 3)
+
+Tempo total de execução: 0.000023 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 1024 x 1024 (execução 1)
+
+Tempo total de execução: 0.000079 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 1024 x 1024 (execução 2)
+
+Tempo total de execução: 0.000083 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 1024 x 1024 (execução 3)
+
+Tempo total de execução: 0.000078 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 2048 x 2048 (execução 1)
+
+Tempo total de execução: 0.000312 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 2048 x 2048 (execução 2)
+
+Tempo total de execução: 0.000315 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 2048 x 2048 (execução 3)
+
+Tempo total de execução: 0.000315 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 3072 x 3072 (execução 1)
+
+Tempo total de execução: 0.000722 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 3072 x 3072 (execução 2)
+
+Tempo total de execução: 0.000713 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 3072 x 3072 (execução 3)
+
+Tempo total de execução: 0.000709 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 4096 x 4096 (execução 1)
+
+Tempo total de execução: 0.001240 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 4096 x 4096 (execução 2)
+
+Tempo total de execução: 0.001251 segundos
+
+---
+
+## Testando com 16 processos MPI e matriz 4096 x 4096 (execução 3)
+
+Tempo total de execução: 0.001248 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 512 x 512 (execução 1)
+
+Tempo total de execução: 0.000016 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 512 x 512 (execução 2)
+
+Tempo total de execução: 0.000016 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 512 x 512 (execução 3)
+
+Tempo total de execução: 0.000016 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 1024 x 1024 (execução 1)
+
+Tempo total de execução: 0.000045 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 1024 x 1024 (execução 2)
+
+Tempo total de execução: 0.000047 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 1024 x 1024 (execução 3)
+
+Tempo total de execução: 0.000046 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 2048 x 2048 (execução 1)
+
+Tempo total de execução: 0.000174 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 2048 x 2048 (execução 2)
+
+Tempo total de execução: 0.000168 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 2048 x 2048 (execução 3)
+
+Tempo total de execução: 0.000173 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 3072 x 3072 (execução 1)
+
+Tempo total de execução: 0.000387 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 3072 x 3072 (execução 2)
+
+Tempo total de execução: 0.000377 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 3072 x 3072 (execução 3)
+
+Tempo total de execução: 0.000372 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 4096 x 4096 (execução 1)
+
+Tempo total de execução: 0.000651 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 4096 x 4096 (execução 2)
+
+Tempo total de execução: 0.000656 segundos
+
+---
+
+## Testando com 32 processos MPI e matriz 4096 x 4096 (execução 3)
+
+Tempo total de execução: 0.000638 segundos
+
+\=============================================
+Fim da simulação: Wed May 14 19:45:52 -03 2025
