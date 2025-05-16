@@ -1,0 +1,41 @@
+=============================================
+Início da simulação MPI de difusão de calor: Wed May 14 18:52:26 -03 2025
+Executável: ./heat_diffusion
+=============================================
+---------------------------------------------
+Testando com 2 processos MPI...
+---------------------------------------------
+Versão 1 (bloqueante): 1138.358394 s
+Versão 2 (não bloqueante + wait): 1140.142923 s
+Versão 3 (não bloqueante + test): 1144.122414 s
+
+---------------------------------------------
+Testando com 4 processos MPI...
+---------------------------------------------
+Versão 1 (bloqueante): 746.657169 s
+Versão 2 (não bloqueante + wait): 746.574511 s
+Versão 3 (não bloqueante + test): 745.034091 s
+
+---------------------------------------------
+Testando com 8 processos MPI...
+---------------------------------------------
+Versão 1 (bloqueante): 685.905568 s
+Versão 2 (não bloqueante + wait): 685.952487 s
+Versão 3 (não bloqueante + test): 693.824799 s
+
+---------------------------------------------
+Testando com 16 processos MPI...
+---------------------------------------------
+Versão 1 (bloqueante): 686.112396 s
+Versão 2 (não bloqueante + wait): 684.511305 s
+Versão 3 (não bloqueante + test): 689.702116 s
+
+---------------------------------------------
+Testando com 32 processos MPI...
+---------------------------------------------
+Versão 1 (bloqueante): 687.534777 s
+Versão 2 (não bloqueante + wait): 687.629563 s
+Versão 3 (não bloqueante + test): 680.967199 s
+
+=============================================
+Fim da simulação: Wed May 14 22:09:50 -03 2025
