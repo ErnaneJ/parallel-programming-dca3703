@@ -8,10 +8,10 @@ Avaliar o desempenho da paralelização do produto matriz-vetor com MPI, dividin
 
 ## ⚙️ Funcionamento
 
-1. A matriz \( \mathbf{A} \in \mathbb{R}^{M \times N} \) é dividida por linhas entre os processos com `MPI_Scatterv`.
-2. O vetor \( \mathbf{x} \in \mathbb{R}^N \) é distribuído inteiro para todos os processos com `MPI_Bcast`.
-3. Cada processo calcula sua parte do vetor \( \mathbf{y}^{(p)} = \mathbf{A}^{(p)} \cdot \mathbf{x} \).
-4. O processo mestre reúne os resultados com `MPI_Gatherv`, formando o vetor completo \( \mathbf{y} \).
+1. A matriz A é dividida por linhas entre os processos com `MPI_Scatterv`.
+2. O vetor X é distribuído inteiro para todos os processos com `MPI_Bcast`.
+3. Cada processo calcula sua parte do vetor y(p) = A(p)•x
+4. O processo mestre reúne os resultados com `MPI_Gatherv`, formando o vetor completo y.
 
 ## 🧪 Execução no NPAD/UFRN
 
