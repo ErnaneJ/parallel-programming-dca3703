@@ -78,25 +78,44 @@ int main(int argc, char **argv)
     int offset = 0;
     for (int i = 0; i < size; ++i)
     {
-      int rows = (i < remainder) ? local_M + 1 : local_M;
-      sendcounts[i] = rows * N;
-      displs[i] = offset;
-      recvcounts[i] = rows;
-      recvdispls[i] = (i == 0) ? 0 : recvdispls[i - 1] + recvcounts[i - 1];
-      offset += rows * N;
+      int rows = (i < remainder) ? local_M + 1 : local_M; // quantas linhas da matriz A o processo i vai receber.
+      sendcounts[i] = rows * N; // Quantidade de elementos (não linhas) a serem enviados ao processo i.
+      displs[i] = offset; // Define a posição inicial dentro de sendbuf de onde os dados para o processo i começam (displs[i + 1] = displs[i] + sendcounts[i]).
+      recvcounts[i] = rows; // Quantas linhas o processo i vai retornar após calcular A*x.
+      recvdispls[i] = (i == 0) ? 0 : recvdispls[i - 1] + recvcounts[i - 1]; // Define o deslocamento dentro de recvbuf para colocar os dados retornados pelo processo i.
+      offset += rows * N; // Atualiza o deslocamento para o próximo processo.
     }
   }
 
+  double t_start = MPI_Wtime();
+
   // Broadcast do vetor x para todos os processos
+  // int MPI_Bcast(
+    // void *buffer, // ponteiro para os dados a serem enviados (ou recebidos, nos outros processos).
+    // int count, // número de elementos no buffer
+    // MPI_Datatype datatype, // tipo MPI dos dados
+    // int root, // rank do processo que envia os dados
+    // MPI_Comm comm // comunicador MPI
+  //);
   MPI_Bcast(x, N, MPI_DOUBLE, MASTER, MPI_COMM_WORLD);
 
-  // Distribuição das linhas da matriz A
+  // Distribuição das linhas da matriz A com MPI_Scatterv pois o Scatterv permite
+  // que cada processo receba um número diferente de linhas e isso é benéfico para os casos onde a 
+  // matriz A não é divisível pelo número de processos disponíveis.
+  // int MPI_Scatterv(
+    // const void *sendbuf, // ponteiro para o buffer de envio
+    // const int *sendcounts, // número de elementos enviados para cada processo
+    // const int *displs, // deslocamentos dos buffers de envio
+    // MPI_Datatype sendtype, // tipo dos dados a serem enviados
+    // void *recvbuf, // ponteiro para o buffer de recebimento
+    // int recvcount, // número de elementos a serem recebidos
+    // MPI_Datatype recvtype, // tipo dos dados a serem recebidos
+    // int root, // rank do processo que envia os dados
+    // MPI_Comm comm // comunicador MPI
+  // );
   MPI_Scatterv(A, sendcounts, displs, MPI_DOUBLE,
                local_A, my_rows * N, MPI_DOUBLE,
                MASTER, MPI_COMM_WORLD);
-
-  // Marca o início da execução paralela
-  double t_start = MPI_Wtime();
 
   // Cada processo calcula sua parte do produto A*x
   for (int i = 0; i < my_rows; ++i)
@@ -108,7 +127,21 @@ int main(int argc, char **argv)
     }
   }
 
-  // Junta os vetores locais no processo mestre
+  // Junta os vetores locais no processo mestre. Usando MPI_Gatherv para coletar os resultados
+  // de cada processo, pois o Gatherv permite que cada processo envie um número diferente de linhas.
+  // Isso é útil quando a matriz A não é divisível pelo número de processos disponíveis e usamos o MPI_Scatterv
+  // para distribuir as linhas.
+  // int MPI_Gatherv(
+    // const void *sendbuf, // ponteiro para o buffer de envio
+    // int sendcount, // número de elementos enviados
+    // MPI_Datatype sendtype, // tipo dos dados a serem enviados
+    // void *recvbuf, // ponteiro para o buffer de recebimento
+    // const int *recvcounts, // número de elementos recebidos por cada processo
+    // const int *displs, // deslocamentos dos buffers de recebimento
+    // MPI_Datatype recvtype, // tipo dos dados a serem recebidos
+    // int root, // rank do processo que recebe os dados
+    // MPI_Comm comm // comunicador MPI
+  // );
   MPI_Gatherv(local_y, my_rows, MPI_DOUBLE,
               y, recvcounts, recvdispls, MPI_DOUBLE,
               MASTER, MPI_COMM_WORLD);
@@ -118,12 +151,6 @@ int main(int argc, char **argv)
 
   if (rank == MASTER)
   {
-    // printf("Resultado y = A * x:\n");
-    // for (int i = 0; i < M; ++i)
-    // {
-    //   printf("%f ", y[i]);
-    // }
-    // printf("\n");
     printf("Tempo total de execução: %f segundos\n", t_end - t_start);
   }
 

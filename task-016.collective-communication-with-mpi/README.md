@@ -1,48 +1,85 @@
-# Produto Matriz-Vetor com MPI
+# 📘 Produto Matriz-Vetor com MPI
 
-Este projeto implementa uma versão paralela do produto entre uma matriz e um vetor, \( \mathbf{y} = \mathbf{A} \cdot \mathbf{x} \), utilizando MPI (Message Passing Interface). A aplicação foi desenvolvida em linguagem C e executada em ambiente de computação de alto desempenho (HPC) no NPAD/UFRN.
+## 🧩 Objetivo
 
-## 💡 Objetivo
+Este projeto implementa a multiplicação de uma matriz $A$ por um vetor $x$, resultando em $y = A \cdot x$, usando **MPI (Message Passing Interface)** para paralelizar o cálculo entre múltiplos processos.
 
-Avaliar o desempenho da paralelização do produto matriz-vetor com MPI, dividindo a matriz entre os processos, distribuindo o vetor para todos, e reunindo os resultados localmente, comparando o tempo de execução em diferentes configurações.
+O foco está em:
 
-## ⚙️ Funcionamento
+* Dividir o trabalho de forma balanceada ou desbalanceada.
+* Avaliar o desempenho da aplicação com diferentes tamanhos de matriz e número de processos.
+* Estudar o impacto das funções de comunicação MPI utilizadas.
 
-1. A matriz A é dividida por linhas entre os processos com `MPI_Scatterv`.
-2. O vetor X é distribuído inteiro para todos os processos com `MPI_Bcast`.
-3. Cada processo calcula sua parte do vetor y(p) = A(p)•x
-4. O processo mestre reúne os resultados com `MPI_Gatherv`, formando o vetor completo y.
+## 🖥️ Estrutura do Código
 
-## 🧪 Execução no NPAD/UFRN
+### 🔨 Compilação
 
-Para executar os experimentos no NPAD:
+Use `mpicc` com otimização para compilar o código:
 
 ```bash
-sbatch run-matvec.sbatch
-````
+mpicc -o matvec main.c
+```
 
-Este script irá:
+### ▶️ Execução via SLURM
 
-* Compilar o código com `mpicc`
-* Rodar o programa com diferentes números de processos (2–32)
-* Testar matrizes quadradas de 512×512 até 4096×4096
-* Repetir cada teste 3 vezes e medir o tempo médio
+Um script `bash` (`sbatch`) automatiza os testes com múltiplos tamanhos de matriz e diferentes quantidades de processos MPI:
 
-## 📊 Análise dos Resultados
+```bash
+sbatch script_job.sh
+```
 
-Utilize o script `plot_analysis.py` para gerar os gráficos de:
+## 🚀 Lógica da Paralelização
 
-* Tempo médio de execução vs. tamanho da matriz
-* Tempo médio de execução vs. número de processos
-* Speedup vs. número de processos
+### 1. **Distribuição da matriz `A`**
 
-Cada gráfico permite observar o impacto da paralelização no desempenho do algoritmo.
+* A matriz é dividida **por linhas**.
+* Como `M` (número de linhas) pode **não ser divisível** por `P` (número de processos), usamos:
 
-## 🧮 Representação Matemática
+> ✅ `MPI_Scatterv`: permite distribuir **números variáveis de linhas** por processo, diferentemente de `MPI_Scatter`, que exige que todos recebam a mesma quantidade.
 
-A operação paralelizada pode ser descrita por:
+### 2. **Distribuição do vetor `x`**
 
-$$
-\mathbf{y} = \bigcup_{p=0}^{P-1} \left( \mathbf{A}^{(p)} \cdot \mathbf{x} \right)
-\quad \text{onde} \quad \mathbf{A}^{(p)} \in \mathbb{R}^{M_p \times N}
-$$
+> ✅ `MPI_Bcast`: é utilizado para **enviar uma cópia inteira de `x` para todos os processos**, já que todos precisam dele para computar suas respectivas linhas.
+
+### 3. **Cálculo local em cada processo**
+
+Cada processo calcula seu subconjunto de $y$ correspondente às suas linhas da matriz.
+
+### 4. **Recolhimento dos resultados**
+
+> ✅ `MPI_Gatherv`: permite coletar **quantidades variáveis** de elementos resultantes de $y$ de volta no processo root, respeitando a distribuição desigual feita inicialmente.
+
+## 📈 Gráficos e Análise de Resultados
+
+### Arquivos de saída utilizados para os gráficos:
+
+### 1. **Speedup vs. Número de Processos**
+
+![Speedup](./speedup-vs-numero-de-processos.png)
+
+* Para **matrizes pequenas**, o speedup **decresce** com mais processos → a **sobreposição de comunicação** e o **overhead de paralelização** superam o ganho.
+* Para **matrizes grandes**, há ganho real até certo ponto, mas o speedup eventualmente **satura ou diminui**.
+
+### 2. **Tempo de Execução vs. Número de Processos**
+
+![Tempo por processo](./tempo-de-execucao-vs-numero-de-processos.png)
+
+* **Melhor desempenho** em 2, 4 ou 8 processos, dependendo do tamanho da matriz.
+* Para **32 processos**, o tempo tende a crescer, indicando que o custo da comunicação supera o benefício da divisão de trabalho.
+
+### 3. **Tempo de Execução vs. Tamanho da Matriz**
+
+![Tempo vs Tamanho](./tempo-de-execucao-vs-tamanho-da-matriz.png)
+
+* O tempo cresce **linearmente com o número de elementos**.
+* Porém, **a escalabilidade depende do número de processos** — para tamanhos muito grandes, 32 processos ajudam; para tamanhos pequenos, atrapalham.
+
+## 📌 Por que usar `MPI_Scatterv` e `MPI_Gatherv`?
+
+| Função         | Quando usar                                   | Usada no código? |
+| -------------- | --------------------------------------------- | ---------------- |
+| `MPI_Scatter`  | Quando todos recebem igual                    | ❌                |
+| `MPI_Scatterv` | Quando cada processo recebe partes diferentes | ✅                |
+| `MPI_Gather`   | Quando todos enviam quantidades iguais        | ❌                |
+| `MPI_Gatherv`  | Quando cada processo envia partes diferentes  | ✅                |
+| `MPI_Bcast`    | Para enviar o mesmo dado a todos              | ✅                |
