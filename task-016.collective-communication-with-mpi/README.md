@@ -4,82 +4,88 @@
 
 Este projeto implementa a multiplicação de uma matriz $A$ por um vetor $x$, resultando em $y = A \cdot x$, usando **MPI (Message Passing Interface)** para paralelizar o cálculo entre múltiplos processos.
 
-O foco está em:
+O foco principal está em:
 
-* Dividir o trabalho de forma balanceada ou desbalanceada.
-* Avaliar o desempenho da aplicação com diferentes tamanhos de matriz e número de processos.
-* Estudar o impacto das funções de comunicação MPI utilizadas.
+* Dividir o trabalho de forma **balanceada** (quando possível) ou **desbalanceada** (quando necessário);
+* Avaliar o desempenho da aplicação com **diferentes tamanhos de matriz** e **número de processos**;
+* Estudar o **impacto da comunicação coletiva MPI** na eficiência paralela;
+* Medir corretamente o **tempo total de execução**, incluindo **comunicação e cálculo**.
 
 ## 🖥️ Estrutura do Código
 
 ### 🔨 Compilação
 
-Use `mpicc` com otimização para compilar o código:
+Compile com `mpicc`, usando otimização:
 
 ```bash
-mpicc -o matvec main.c
+mpicc -O3 -o matvec main.c
 ```
 
 ### ▶️ Execução via SLURM
 
-Um script `bash` (`sbatch`) automatiza os testes com múltiplos tamanhos de matriz e diferentes quantidades de processos MPI:
+Um script SLURM automatiza os testes para diferentes tamanhos de matriz e números de processos:
 
 ```bash
 sbatch script_job.sh
 ```
+
+O script testa execuções com 2, 4, 8, 16 e 32 processos, em matrizes de tamanhos $512 \times 512$ até $4096 \times 4096$.
 
 ## 🚀 Lógica da Paralelização
 
 ### 1. **Distribuição da matriz `A`**
 
 * A matriz é dividida **por linhas**.
-* Como `M` (número de linhas) pode **não ser divisível** por `P` (número de processos), usamos:
+* Como $M$ (número de linhas) pode **não ser divisível** por $P$ (número de processos), é usada:
 
-> ✅ `MPI_Scatterv`: permite distribuir **números variáveis de linhas** por processo, diferentemente de `MPI_Scatter`, que exige que todos recebam a mesma quantidade.
+> ✅ `MPI_Scatterv`: permite distribuir **quantidades variáveis** de linhas por processo.
+> ⛔ `MPI_Scatter` exige divisão uniforme, o que causaria erro ou ineficiência.
 
 ### 2. **Distribuição do vetor `x`**
 
-> ✅ `MPI_Bcast`: é utilizado para **enviar uma cópia inteira de `x` para todos os processos**, já que todos precisam dele para computar suas respectivas linhas.
+> ✅ `MPI_Bcast`: utilizado para **enviar o vetor `x` completo para todos os processos**, já que todos precisam dele para calcular o produto local.
 
-### 3. **Cálculo local em cada processo**
+### 3. **Cálculo local**
 
-Cada processo calcula seu subconjunto de $y$ correspondente às suas linhas da matriz.
+Cada processo computa o produto escalar das linhas de sua fatia da matriz com o vetor `x`, produzindo uma parte do vetor `y`.
 
 ### 4. **Recolhimento dos resultados**
 
-> ✅ `MPI_Gatherv`: permite coletar **quantidades variáveis** de elementos resultantes de $y$ de volta no processo root, respeitando a distribuição desigual feita inicialmente.
+> ✅ `MPI_Gatherv`: usado para **reunir partes variáveis do vetor `y`** de volta no processo mestre.
+> ⛔ `MPI_Gather` não seria suficiente, pois assume tamanhos iguais de dados a serem coletados.
 
 ## 📈 Gráficos e Análise de Resultados
 
-### Arquivos de saída utilizados para os gráficos:
+Os resultados foram obtidos com medições reais de tempo (incluindo **toda a comunicação MPI**) e analisados estatisticamente. Os gráficos abaixo foram gerados com Python, usando os dados médios de 3 execuções por configuração.
 
 ### 1. **Speedup vs. Número de Processos**
 
 ![Speedup](./speedup-vs-numero-de-processos.png)
 
-* Para **matrizes pequenas**, o speedup **decresce** com mais processos → a **sobreposição de comunicação** e o **overhead de paralelização** superam o ganho.
-* Para **matrizes grandes**, há ganho real até certo ponto, mas o speedup eventualmente **satura ou diminui**.
+* Para **matrizes grandes**, o speedup aumenta com o número de processos até certo ponto (\~16).
+* Para **matrizes pequenas**, o uso excessivo de processos **piora o desempenho**, por causa da **sobrecarga de comunicação**.
 
 ### 2. **Tempo de Execução vs. Número de Processos**
 
 ![Tempo por processo](./tempo-de-execucao-vs-numero-de-processos.png)
 
-* **Melhor desempenho** em 2, 4 ou 8 processos, dependendo do tamanho da matriz.
-* Para **32 processos**, o tempo tende a crescer, indicando que o custo da comunicação supera o benefício da divisão de trabalho.
+* Redução clara de tempo para matrizes grandes (2048×2048+).
+* Com **32 processos**, há saturação: o ganho computacional é anulado pela **latência e sincronização MPI**.
 
 ### 3. **Tempo de Execução vs. Tamanho da Matriz**
 
 ![Tempo vs Tamanho](./tempo-de-execucao-vs-tamanho-da-matriz.png)
 
-* O tempo cresce **linearmente com o número de elementos**.
-* Porém, **a escalabilidade depende do número de processos** — para tamanhos muito grandes, 32 processos ajudam; para tamanhos pequenos, atrapalham.
+* O tempo cresce aproximadamente **linearmente** com o número de elementos da matriz.
+* Com mais processos, matrizes grandes são resolvidas mais rapidamente.
+  Já para matrizes pequenas, o paralelismo **não compensa**.
 
-## 📌 Por que usar `MPI_Scatterv` e `MPI_Gatherv`?
+## 📌 Comparativo: Por que `MPI_Scatterv` e `MPI_Gatherv`?
 
-| Função         | Quando usar                                   | Usada no código? |
-| -------------- | --------------------------------------------- | ---------------- |
-| `MPI_Scatter`  | Quando todos recebem igual                    | ❌                |
-| `MPI_Scatterv` | Quando cada processo recebe partes diferentes | ✅                |
-| `MPI_Gather`   | Quando todos enviam quantidades iguais        | ❌                |
-| `MPI_Gatherv`  | Quando cada processo envia partes diferentes  | ✅                |
-| `MPI_Bcast`    | Para enviar o mesmo dado a todos              | ✅                |
+| Função         | Quando usar                                            | Usada neste projeto? |
+| -------------- | ------------------------------------------------------ | -------------------- |
+| `MPI_Scatter`  | Quando todos recebem **quantidades iguais**            | ❌                    |
+| `MPI_Scatterv` | Quando cada processo recebe **quantidades diferentes** | ✅                    |
+| `MPI_Gather`   | Quando todos enviam **quantidades iguais**             | ❌                    |
+| `MPI_Gatherv`  | Quando cada processo envia **quantidades diferentes**  | ✅                    |
+| `MPI_Bcast`    | Para enviar o mesmo dado a todos os processos          | ✅                    |
